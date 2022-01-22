@@ -1,5 +1,5 @@
+from ast import Import
 from pathlib import Path
-from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = environ.get('DJANGO_KEY')
+SECRET_KEY = 'somekey'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -67,10 +67,10 @@ WSGI_APPLICATION = 'ecuflash.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': environ.get('PG_DB'),
-        'USER': environ.get('PG_USER'),
-        'PASSWORD': environ.get('PG_PASSWORD'),
-        'HOST': environ.get('PG_HOST')
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'default',
+        'HOST': 'localhost'
     }
 }
 
@@ -123,3 +123,8 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
