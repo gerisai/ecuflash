@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | Servicios {% endblock %}
+
+{% block content %}
+<div class="px-4 pt-5 my-5 text-center">
+    <h1 class="display-4 fw-bold">Servicios</h1>
+    <div class="container">
+        <hr>
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2>Programación</h2>
+                <p class="lead">Programación/Reflasheo de ECUs para marcas Chrysler, Ford y proximamente Chevrolet</p>
+            </div>
+            <div class="col-md-5">
+                <img src="{% static 'img/ecu.jpg' %}" class="bd-placeholder-img bd-placer-img-lg img-fluid mx-auto" width="300" height="300"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2>Conectores</h2>
+                <p class="lead">Venta de conectores para una gran gama de ECUs</p>
+            </div>
+            <div class="col-md-5">
+                <img src="{% static 'img/conectors.jpg' %}" class="bd-placeholder-img bd-placer-img-lg img-fluid mx-auto" width="300" height="300"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2>Y mas...</h2>
+                <p class="lead">Venta de sensores, virginización, descontaminación, etc...</p>
+            </div>
+            <div class="col-md-5">
+                <img src="{% static 'img/injectors.jpg' %}" class="bd-placeholder-img bd-placer-img-lg img-fluid mx-auto" width="300" height="300"/>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+{% endblock %}

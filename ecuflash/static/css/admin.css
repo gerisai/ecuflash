@@ -1,0 +1,22 @@
+#header {
+    height: 80px;
+    background: black;
+    color: white;
+}
+
+#branding h1 {
+    color: white;
+}
+
+div.breadcrumbs {
+    background: black;
+}
+
+.module h2, .module caption {
+    background: black;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: black;
+    color: white;
+}

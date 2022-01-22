@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | Inventario {% endblock %}
+
+{% block content %}
+<div class="px-4 pt-5 my-5 text-center">
+    <h1 class="display-4 fw-bold">Inventario</h1>
+    <!-- Search -->
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Busqueda
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+               <form action="{% url 'inventory' %}">
+                   <fieldset>
+                       <div class="form-group row">
+                            <div class="col-sm-3">
+                               <input type="text" name="keywords" class="form-control" placeholder="Palabra clave" value="{{ values.keywords }}">
+                            </div>     
+                            <div class="col-sm-2">
+                               <select class="form-select" name="marca">
+                                <option value="">Marca</option>
+                                {% for key,value in marcas.items %}
+                                  <option value="{{ key }}"
+                                  {% if key == values.marca %}
+                                    selected
+                                  {% endif %}
+                                  >{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                            </div>  
+                            <div class="col-sm-3">
+                              <input type="text" name="modelo" class="form-control" placeholder="Modelo" value="{{ values.modelo }}">
+                           </div>  
+                            <div class="col-sm-1">
+                              <input type="number" name="anio" class="form-control" placeholder="Año" value="{{ values.anio }}">
+                            </div>
+                            <div class="col-sm-2">
+                              <input type="submit" class="form-control btn-dark" value="Buscar">
+                            </div>
+                            <div class="col-sm-1">
+                              <a href="{% url 'inventory' %}" class="btn btn-info">Reiniciar</a>
+                            </div>
+                       </div>
+                   </fieldset>
+               </form> 
+            </div>
+          </div>
+        </div>
+    </div>
+    {% if productos %}
+    <!-- Selector -->
+    <div class="btn-group mt-5" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="albumRadio" autocomplete="off" checked="">
+        <label class="btn btn-outline-primary" for="albumRadio">Album</label>
+        <input type="radio" class="btn-check" name="btnradio" id="tableRadio" autocomplete="off">
+        <label class="btn btn-outline-primary" for="tableRadio">Tabla</label>
+    </div>
+    <!-- Album -->
+    <div id="album" class="py-5">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              <!-- Product -->
+              {% for producto in productos %}  
+              <div class="col">
+                  <div class="card shadow-sm">
+                      <div class="card-header">{{ producto.nombre }}</div>
+                      <img src="{{ producto.imagen.origen.url }}" alt="{{ producto.nombre }}" class="card-img-top" width="250" height="250">
+                      <div class="card-body">
+                          <h5>Marca: {{ producto.marca }}</h5>
+                          <h5>Modelo: {{ producto.modelo }}</h5>
+                          <h5>Año: {{ producto.año }} </h5> 
+                      </div>   
+                  </div>
+              </div>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+    <table id="table" class="table table-hover my-5" style="display: none;">
+        <thead>
+          <tr class="table-dark">
+            <th scope="col">Nombre</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Año</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for producto in productos %}
+          <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.marca }}</td>
+            <td>{{ producto.modelo }}</td>
+            <td>{{ producto.año }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+    <h3 class="my-5">Ningún producto coincide con tu busqueda</h3>
+    {% endif %}
+</div>
+{% endblock %}
