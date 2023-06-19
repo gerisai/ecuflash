@@ -274,6 +274,7 @@ Create a file called **local_settings.py** on your server along side of settings
 - DATABASES
 - DEBUG
 - EMAIL\_\*
+- STATIC_ROOT
 
 ## Run Migrations
 ```
@@ -288,8 +289,11 @@ Create a file called **local_settings.py** on your server along side of settings
 ```
 
 ## Create static files
-```
+```shell
 python manage.py collectstatic
+sudo cp -r static/ /var/www/html/
+sudo chown -R nobody:nogroup /var/www/html/static/
+# set STATIC_ROOT to 'var/www/html/static' in local_settings.py
 ```
 
 ### Create exception for port 8000
@@ -420,7 +424,7 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /home/djangoadmin/pyapps/btre_project;
+        root /var/www/html/;
     }
     
     location /media/ {
@@ -515,3 +519,17 @@ server {
 # sudo systemctl restart nginx
 # sudo systemctl restart gunicorn
 ```
+
+## SSL
+
+Using Let's Encrypt
+```shell
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+vi /etc/nginx/sites-enabled/ecuflash # Comment all listen directives
+sudo certbot --nginx
+sudo certbot install --cert-name ecuflash.com.mx # If the above command fails
+sudo certbot renew --dry-run # Test automatic renewal
+```
+
